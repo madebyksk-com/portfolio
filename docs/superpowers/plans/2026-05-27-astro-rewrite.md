@@ -98,7 +98,7 @@ node_modules/
 Write `/Users/minkhantkyaw/Work/portfolio/astro.config.mjs`:
 
 ```js
-import { defineConfig } from 'astro';
+import { defineConfig } from 'astro/config';
 
 export default defineConfig({
   site: 'https://madebyksk.com',
@@ -180,7 +180,7 @@ Expected: `tailwindcss` and `@tailwindcss/vite` added to `dependencies`.
 Replace the contents of `/Users/minkhantkyaw/Work/portfolio/astro.config.mjs` with:
 
 ```js
-import { defineConfig } from 'astro';
+import { defineConfig } from 'astro/config';
 import tailwindcss from '@tailwindcss/vite';
 
 export default defineConfig({
