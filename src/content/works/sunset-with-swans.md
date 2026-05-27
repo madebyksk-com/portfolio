@@ -1,8 +1,8 @@
 ---
 title: Sunset with Swans
 year: 2023
-image: ./images/sunset-with-swans.png
+image: images/sunset-with-swans.png
 alt: Serene sunset with swans in reflection
-order: 30
+order: 1
 location: Yangon, Myanmar
 ---
