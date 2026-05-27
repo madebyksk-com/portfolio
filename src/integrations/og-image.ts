@@ -164,6 +164,26 @@ export default function ogImage(): AstroIntegration {
           logger.info(`Generated OG image at ${opts.outPath}`);
         };
 
+        // Apple touch icon: 180×180 opaque PNG of the favicon mark on
+        // the brand's cream background. iOS home-screen icons can't use
+        // adaptive SVG and don't honour transparency, so this is its
+        // own pre-rendered artefact.
+        const faviconSvg = await fs.readFile(
+          path.join(cwd, 'public/favicon.svg'),
+          'utf8',
+        );
+        const appleIconPng = new Resvg(faviconSvg, {
+          fitTo: { mode: 'width', value: 360 },
+          background: '#FAF7F2',
+        })
+          .render()
+          .asPng();
+        await sharp(appleIconPng)
+          .resize(180, 180)
+          .png({ quality: 95 })
+          .toFile(path.join(outDir, 'apple-touch-icon.png'));
+        logger.info(`Generated apple-touch-icon.png`);
+
         // Card 1: portrait — used by / and /about.
         const portraitBuffer = await fs.readFile(
           path.join(cwd, 'src/assets/profile.jpg'),

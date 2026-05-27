@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+  <style>
+    /* Light browser theme: dark square with a cream K */
+    .bg { fill: #1A1410; }
+    .fg { fill: #FAF7F2; }
+    /* Dark browser theme: invert — cream square with a dark K */
+    @media (prefers-color-scheme: dark) {
+      .bg { fill: #FAF7F2; }
+      .fg { fill: #1A1410; }
+    }
+  </style>
+  <rect class="bg" width="100" height="100" rx="10" ry="10"/>
+  <path
+    class="fg"
+    d="M 22 18
+       L 38 18
+       L 38 46
+       L 66 18
+       L 84 18
+       L 56 50
+       L 84 82
+       L 66 82
+       L 38 54
+       L 38 82
+       L 22 82
+       Z"
+  />
+</svg>
