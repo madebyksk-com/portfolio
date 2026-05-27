@@ -15,9 +15,11 @@ content:
     format: yaml-frontmatter
     view:
       primary: title
-      sort: order
-      order: asc
       fields: [title, year, medium, order]
+      sort: [order, year, title]
+      default:
+        sort: order
+        order: asc
     fields:
       - name: title
         label: Title
@@ -74,5 +76,3 @@ content:
 settings:
   content:
     merge: false
-  commit:
-    extends: external
