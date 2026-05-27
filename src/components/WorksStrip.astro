@@ -1,0 +1,15 @@
+---
+import { getCollection } from 'astro:content';
+import Tile from './Tile.astro';
+
+const works = (await getCollection('works')).sort(
+  (a, b) => a.data.order - b.data.order
+);
+---
+<section id="works" class="strip px-[var(--pad-page)] pt-16 md:pt-24 lg:pt-30" aria-labelledby="strip-label">
+  <h2 id="strip-label" class="font-semibold text-[11px] tracking-[0.16em] mb-8">SELECTED WORKS — 2018 / 2025</h2>
+
+  <div class="strip-track flex flex-col gap-8 lg:flex-row lg:gap-24 lg:overflow-x-auto lg:overflow-y-hidden lg:snap-x lg:snap-mandatory lg:pb-4 lg:[-webkit-overflow-scrolling:touch] lg:[&::-webkit-scrollbar]:h-0" role="list">
+    {works.map((work) => <Tile work={work} />)}
+  </div>
+</section>
