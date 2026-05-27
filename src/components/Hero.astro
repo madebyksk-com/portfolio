@@ -1,0 +1,56 @@
+---
+import { Image } from 'astro:assets';
+import profile from '../assets/profile.jpg';
+import ArrowUpRight from './ArrowUpRight.astro';
+---
+<section class="hero flex flex-col gap-5 px-[var(--pad-page)] md:gap-8 lg:gap-4 lg:relative lg:py-0">
+  <span class="year block text-right font-bold text-[11px] tracking-[0.16em] lg:hidden">2026</span>
+
+  <div class="headline-block relative flex flex-col gap-6 lg:h-[605px] lg:[container-type:inline-size]">
+    <h1 class="headline font-display font-black text-ink relative z-[2]
+        text-[clamp(72px,22vw,110px)] leading-[1.0] tracking-[-0.02em]
+        md:text-[clamp(110px,14vw,140px)]
+        lg:absolute lg:top-[50px] lg:left-0 lg:right-0 lg:flex lg:justify-between lg:items-baseline
+        lg:text-[clamp(140px,14cqw,220px)] lg:leading-[0.85] lg:tracking-[-0.022em] lg:m-0 lg:p-0">
+      <span class="block lg:inline-block">KHIN</span>
+      <span class="block lg:inline-block">SANDAR</span>
+      <span class="block lg:inline-block">KYAW</span>
+    </h1>
+
+    <figure class="portrait portrait-shadow relative mx-auto mt-[-20%]
+        w-[86%] aspect-[4/5]
+        md:w-[60%] md:mt-[-18%] md:aspect-square
+        lg:w-[380px] lg:aspect-square lg:absolute lg:top-[140px] lg:left-1/2 lg:-translate-x-1/2 lg:mt-0
+        z-[1]">
+      <Image
+        src={profile}
+        alt="Portrait of the artist, Khin Sandar Kyaw"
+        loading="eager"
+        class="w-full h-full object-cover object-center filter grayscale contrast-[1.08] brightness-[1.02] bg-muted"
+      />
+    </figure>
+
+    <span class="based font-semibold text-[11px] tracking-[0.32em]
+        lg:absolute lg:top-[calc(50px+clamp(140px,14cqw,220px)*0.85+40px)] lg:right-0 lg:text-right">
+      BASED IN MYANMAR
+    </span>
+
+    <!-- Desktop-only year tag (hidden via container's absolute layout on lg) -->
+    <span class="hidden lg:block lg:absolute lg:top-6 lg:right-0 font-body font-bold text-[12px] tracking-[0.16em] text-ink">2026</span>
+  </div>
+
+  <p class="bio text-[14px] text-center max-w-[320px] mx-auto mt-2 md:max-w-[480px] lg:max-w-[400px] lg:-mt-11">
+    Oil on canvas, capturing the light of Myanmar's landscapes since 2010. Subjects span Inle Lake, Bagan, and the Shan highlands.
+  </p>
+
+  <div class="hero-bottom hidden md:flex justify-between items-start gap-8 mt-12 pt-4 lg:mt-14 lg:pt-6">
+    <div class="flex flex-col gap-2">
+      <span class="font-semibold text-[11px] tracking-[0.16em]">AVAILABLE FOR COMMISSIONS<ArrowUpRight /></span>
+      <a class="text-[14px] font-medium underline" href="mailto:hello@khinsandarkyaw.com">hello@khinsandarkyaw.com</a>
+    </div>
+    <div class="flex flex-col gap-2 text-right">
+      <span class="font-semibold text-[11px] tracking-[0.16em]">RECENT WORK<ArrowUpRight /></span>
+      <a class="font-display font-bold text-[18px] tracking-[0.03em]" href="#works">FISHERMAN AT INLE</a>
+    </div>
+  </div>
+</section>

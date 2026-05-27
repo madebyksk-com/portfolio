@@ -118,3 +118,26 @@ img { max-width: 100%; display: block; }
   mix-blend-mode: difference;
   user-select: none;
 }
+
+/* ------------------------------------------------------------
+   Portrait + studio shadow. Parallax-driven via CSS variables
+   that interactions.ts writes on mousemove. Kept as plain CSS
+   because the calc() in transform mixes runtime vars.
+   ------------------------------------------------------------ */
+.portrait-shadow { position: relative; }
+.portrait-shadow::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: var(--color-shadow);
+  transform: translate(
+    calc(var(--shadow-offset) + var(--shadow-parallax-x, 0px)),
+    calc(var(--shadow-offset) + var(--shadow-parallax-y, 0px))
+  );
+  z-index: -1;
+  transition: transform 0.25s ease-out;
+  will-change: transform;
+}
+@media (prefers-reduced-motion: reduce) {
+  .portrait-shadow::before { transition: none; }
+}
