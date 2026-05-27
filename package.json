@@ -12,10 +12,13 @@
   },
   "dependencies": {
     "@astrojs/sitemap": "^3.7.3",
+    "@resvg/resvg-js": "^2.6.2",
     "@tailwindcss/vite": "^4.3.0",
     "astro": "^5.0.0",
+    "satori": "^0.26.0",
     "tailwindcss": "^4.3.0",
-    "thumbhash": "^0.1.1"
+    "thumbhash": "^0.1.1",
+    "wawoff2": "^2.0.1"
   },
   "devDependencies": {
     "@astrojs/check": "^0.9.0",
