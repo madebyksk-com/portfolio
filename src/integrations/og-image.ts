@@ -184,7 +184,7 @@ export default function ogImage(): AstroIntegration {
           .toFile(path.join(outDir, 'apple-touch-icon.png'));
         logger.info(`Generated apple-touch-icon.png`);
 
-        // Card 1: portrait — used by / and /about.
+        // Card: portrait — used by / and /about.
         const portraitBuffer = await fs.readFile(
           path.join(cwd, 'src/assets/profile.jpg'),
         );
@@ -195,55 +195,66 @@ export default function ogImage(): AstroIntegration {
           outPath: path.join(outDir, 'og.jpg'),
         });
 
-        // Card 2: first painting (by `order`) — used by /works.
-        const firstPaintingPath = await findFirstPaintingImage(cwd);
-        if (firstPaintingPath) {
-          const paintingBuffer = await fs.readFile(firstPaintingPath);
+        // Per-painting cards — one per /works/<slug>/ page.
+        // The /works gallery references the first painting's card.
+        const paintings = await listPaintings(cwd);
+        if (paintings.length === 0) {
+          logger.warn('No paintings found — skipping per-painting OG cards');
+        }
+        for (const p of paintings) {
+          const paintingBuffer = await fs.readFile(p.imagePath);
+          const tagline = `${p.title.toUpperCase()} · ${p.year}`;
           await renderCard({
             imageBuffer: paintingBuffer,
             grayscale: false,
-            tagline: 'SELECTED OIL PAINTINGS · MYANMAR',
-            outPath: path.join(outDir, 'og-works.jpg'),
+            tagline,
+            outPath: path.join(outDir, `og-works-${p.slug}.jpg`),
           });
-        } else {
-          logger.warn('No paintings found for /works OG card');
         }
       },
     },
   };
 }
 
+interface PaintingMeta {
+  slug: string;
+  order: number;
+  title: string;
+  year: number;
+  imagePath: string;
+}
+
 /**
- * Find the painting with the lowest `order` value in the works
- * collection. Returns the absolute filesystem path to its image, or
- * an empty string if no paintings exist. Pragmatic frontmatter parse
- * (line-based regex) — sufficient for our flat schema, no YAML dep.
+ * Walk the works collection and pull out everything the OG generator
+ * needs — slug, title, year, order, absolute image path — by parsing
+ * the frontmatter directly. Pragmatic line-based regex parse is
+ * sufficient for our flat schema (no nesting, no multi-line values)
+ * and saves a YAML dependency in build-only code.
  */
-async function findFirstPaintingImage(cwd: string): Promise<string> {
+async function listPaintings(cwd: string): Promise<PaintingMeta[]> {
   const worksDir = path.join(cwd, 'src/content/works');
   const files = await fs.readdir(worksDir);
-  let best: { order: number; imagePath: string } = {
-    order: Infinity,
-    imagePath: '',
-  };
+  const out: PaintingMeta[] = [];
   for (const f of files) {
     if (!f.endsWith('.md')) continue;
     const text = await fs.readFile(path.join(worksDir, f), 'utf8');
     const fmMatch = text.match(/^---\n([\s\S]+?)\n---/);
     if (!fmMatch) continue;
-    const fm = fmMatch[1];
-    const orderStr = fm.match(/^order:\s*(\d+)/m)?.[1];
-    const imageStr = fm.match(/^image:\s*(.+?)$/m)?.[1]?.trim();
-    if (!imageStr) continue;
-    const order = orderStr ? parseInt(orderStr, 10) : 999;
-    if (order < best.order) {
-      // Image path in frontmatter is relative to the .md file
-      // (Pages CMS writes either ./images/foo.jpg or images/foo.jpg).
-      best = {
-        order,
-        imagePath: path.resolve(worksDir, imageStr),
-      };
-    }
+    const fm = fmMatch[1]!;
+    const slug = f.replace(/\.md$/, '');
+    const order = parseInt(fm.match(/^order:\s*(\d+)/m)?.[1] ?? '999', 10);
+    const image = fm.match(/^image:\s*(.+?)$/m)?.[1]?.trim() ?? '';
+    const title = fm.match(/^title:\s*(.+?)$/m)?.[1]?.trim() ?? slug;
+    const year = parseInt(fm.match(/^year:\s*(\d+)/m)?.[1] ?? '0', 10);
+    if (!image) continue;
+    out.push({
+      slug,
+      order,
+      title,
+      year,
+      imagePath: path.resolve(worksDir, image),
+    });
   }
-  return best.imagePath;
+  return out.sort((a, b) => a.order - b.order);
 }
+

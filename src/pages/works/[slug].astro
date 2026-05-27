@@ -1,0 +1,46 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import WorksGallery from '../../components/WorksGallery.astro';
+
+export async function getStaticPaths() {
+  const works = await getCollection('works');
+  return works.map((work) => ({
+    params: { slug: work.id },
+    props: { work },
+  }));
+}
+
+const { work } = Astro.props;
+const { title, year, medium, dimensions, location } = work.data;
+
+const description = work.body && work.body.trim().length > 0
+  ? work.body.trim().split('\n')[0]!.slice(0, 200)
+  : `${title} (${year}) — ${[medium, dimensions, location].filter(Boolean).join(', ')}. Oil painting by Khin Sandar Kyaw.`;
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'VisualArtwork',
+  name: title,
+  dateCreated: String(year),
+  artMedium: medium,
+  artworkSurface: dimensions ?? undefined,
+  locationCreated: location ?? undefined,
+  creator: { '@id': 'https://madebyksk.com/#person' },
+  url: `https://madebyksk.com/works/${work.id}/`,
+  isPartOf: { '@type': 'CollectionPage', url: 'https://madebyksk.com/works' },
+};
+---
+<Base
+  title={`${title} — Khin Sandar Kyaw`}
+  description={description}
+  current="works"
+  ogImagePath={`/og-works-${work.id}.jpg`}
+  ogImageAlt={`${title} (${year}) — oil painting by Khin Sandar Kyaw`}
+  jsonLd={jsonLd}
+>
+  <WorksGallery />
+  <script is:inline define:vars={{ slug: work.id }}>
+    window.__lightboxSlug = slug;
+  </script>
+</Base>

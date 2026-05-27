@@ -1,5 +1,5 @@
 ---
-import { Image } from 'astro:assets';
+import { Image, getImage } from 'astro:assets';
 import { render } from 'astro:content';
 import type { CollectionEntry } from 'astro:content';
 import { getPlaceholder } from '../lib/placeholder';
@@ -10,10 +10,26 @@ const placeholder = await getPlaceholder(image);
 const hasBody = work.body && work.body.trim().length > 0;
 const { Content } = hasBody ? await render(work) : { Content: null };
 
+// HD variant for the lightbox modal — capped at 1600px wide, WebP @ 85%.
+// Typically 300-600 KB per painting; only fetched when the user opens it.
+const hd = await getImage({ src: image, width: 1600, format: 'webp', quality: 85 });
+
 const meta = [year, medium, dimensions, location].filter(Boolean).join(' · ');
 ---
-<article class="work-row grid grid-cols-1 gap-6 md:grid-cols-[5fr_7fr] md:gap-12 lg:gap-20 items-center">
-  <figure class="m-0 portrait-shadow relative">
+<article id={`work-${work.id}`} class="work-row grid grid-cols-1 gap-6 md:grid-cols-[5fr_7fr] md:gap-12 lg:gap-20 items-center">
+  <a
+    href={`/works/${work.id}/`}
+    class="block m-0 portrait-shadow relative cursor-zoom-in focus-visible:outline focus-visible:outline-2 focus-visible:outline-ink focus-visible:outline-offset-4"
+    data-lightbox
+    data-slug={work.id}
+    data-title={title}
+    data-meta={meta}
+    data-alt={alt}
+    data-hd-src={hd.src}
+    data-hd-width={hd.attributes.width ?? image.width}
+    data-hd-height={hd.attributes.height ?? image.height}
+    aria-label={`View ${title} larger`}
+  >
     <Image
       src={image}
       alt={alt}
@@ -21,7 +37,7 @@ const meta = [year, medium, dimensions, location].filter(Boolean).join(' · ');
       class="relative z-[1] w-full h-auto object-cover bg-cover bg-center"
       style={`background-image: url('${placeholder}')`}
     />
-  </figure>
+  </a>
 
   <div class="flex flex-col gap-4 md:gap-6">
     <h2 class="font-display font-bold text-[clamp(28px,4vw,44px)] leading-[1.05] tracking-[-0.01em] m-0">

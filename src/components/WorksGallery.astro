@@ -1,0 +1,24 @@
+---
+import { getCollection } from 'astro:content';
+import WorkRow from './WorkRow.astro';
+import Lightbox from './Lightbox.astro';
+
+const works = (await getCollection('works')).sort(
+  (a, b) => a.data.order - b.data.order,
+);
+---
+<section class="works-hero relative px-[var(--pad-page)] pt-13">
+  <span class="absolute top-4 right-[var(--pad-page)] font-bold text-[11px] tracking-[0.16em]">2026</span>
+  <h1 class="font-display font-black m-0 leading-[0.85] tracking-[-0.022em] text-[clamp(56px,11vw,140px)]">WORKS</h1>
+  <p class="text-[11px] font-semibold tracking-[0.32em] mt-5">OIL ON CANVAS&nbsp;·&nbsp;MYANMAR LANDSCAPES</p>
+</section>
+
+<section class="px-[var(--pad-page)] max-w-[1280px] mx-auto mt-16 md:mt-20 lg:mt-24 mb-16 md:mb-24 flex flex-col gap-20 md:gap-28 lg:gap-32">
+  {works.map((work) => <WorkRow work={work} />)}
+</section>
+
+<Lightbox />
+
+<script>
+  import '../scripts/lightbox.ts';
+</script>

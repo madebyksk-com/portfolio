@@ -1,0 +1,51 @@
+---
+// Single <dialog> rendered once per gallery page. The lightbox script
+// fills its image and caption from the clicked link's data-* attrs.
+---
+<dialog
+  id="lightbox"
+  class="lightbox-dialog fixed inset-0 m-0 max-w-none max-h-none w-screen h-screen bg-bg p-0 border-0 text-ink open:flex hidden flex-col items-stretch backdrop:bg-bg/95"
+  aria-labelledby="lightbox-title"
+>
+  <button
+    type="button"
+    class="lightbox-close absolute top-6 right-[var(--pad-page)] z-10 font-semibold text-[11px] tracking-[0.16em] underline cursor-pointer"
+    aria-label="Close"
+  >
+    CLOSE
+  </button>
+
+  <figure class="m-0 flex flex-col items-center justify-center flex-1 p-[var(--pad-page)] pt-16 gap-6">
+    <img
+      class="lightbox-image max-w-full max-h-[78vh] object-contain bg-muted"
+      src=""
+      alt=""
+      decoding="async"
+    />
+    <figcaption class="text-center max-w-[640px]">
+      <h2 id="lightbox-title" class="lightbox-title font-display font-bold text-[clamp(22px,3vw,32px)] leading-[1.1] tracking-[-0.01em] m-0"></h2>
+      <p class="lightbox-meta text-[11px] font-semibold tracking-[0.16em] text-muted mt-3 m-0"></p>
+    </figcaption>
+  </figure>
+</dialog>
+
+<style is:global>
+  /* Lock body scroll while the dialog is open. */
+  body:has(dialog#lightbox[open]) { overflow: hidden; }
+
+  /* Smooth morph between the gallery thumbnail and the modal HD image
+     via the View Transitions API. The script assigns the matching
+     view-transition-name to the active pair right before each
+     transition and clears it afterwards. */
+  ::view-transition-old(lightbox-image),
+  ::view-transition-new(lightbox-image) {
+    animation-duration: 0.7s;
+    animation-timing-function: cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  @media (prefers-reduced-motion: reduce) {
+    ::view-transition-old(lightbox-image),
+    ::view-transition-new(lightbox-image) {
+      animation-duration: 0.01ms;
+    }
+  }
+</style>
