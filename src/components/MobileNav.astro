@@ -1,13 +1,13 @@
 ---
 import ArrowUpRight from './ArrowUpRight.astro';
-const { current } = Astro.props as { current?: 'home' | 'about' };
+const { current } = Astro.props as { current?: 'home' | 'works' | 'about' };
 ---
 <nav
   id="mobile-nav"
   class="mobile-nav fixed inset-0 bg-bg z-50 flex flex-col items-center justify-center gap-8 opacity-0 pointer-events-none transition-opacity duration-200 ease-linear md:hidden"
   aria-hidden="true"
 >
-  <a class="font-display font-bold text-[32px] tracking-[0.02em]" href="/#works" aria-current={current === 'home' ? 'page' : undefined}>[ WORKS ]</a>
+  <a class="font-display font-bold text-[32px] tracking-[0.02em]" href="/works" aria-current={current === 'works' ? 'page' : undefined}>[ WORKS ]</a>
   <a class="font-display font-bold text-[32px] tracking-[0.02em]" href="/about" aria-current={current === 'about' ? 'page' : undefined}>[ ABOUT ]</a>
   <a class="font-display font-bold text-[32px] tracking-[0.02em]" href="/#contact">[ CONTACT ]</a>
   <a class="font-display font-bold text-[32px] tracking-[0.02em]" href="mailto:hello@khinsandarkyaw.com">INQUIRE<ArrowUpRight /></a>

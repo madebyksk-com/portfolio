@@ -1,0 +1,46 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../layouts/Base.astro';
+import WorkRow from '../components/WorkRow.astro';
+
+const works = (await getCollection('works')).sort(
+  (a, b) => a.data.order - b.data.order
+);
+
+const description =
+  "Selected oil paintings by Khin Sandar Kyaw — landscapes of Myanmar from Inle Lake, Bagan, and the Shan highlands.";
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'CollectionPage',
+  url: 'https://madebyksk.com/works',
+  name: 'Works — Khin Sandar Kyaw',
+  description,
+  creator: { '@id': 'https://madebyksk.com/#person' },
+  hasPart: works.map((w) => ({
+    '@type': 'VisualArtwork',
+    name: w.data.title,
+    dateCreated: String(w.data.year),
+    artMedium: w.data.medium,
+    artworkSurface: w.data.dimensions ?? undefined,
+    locationCreated: w.data.location ?? undefined,
+    creator: { '@id': 'https://madebyksk.com/#person' },
+  })),
+};
+---
+<Base
+  title="Works — Khin Sandar Kyaw"
+  description={description}
+  current="works"
+  jsonLd={jsonLd}
+>
+  <section class="works-hero relative px-[var(--pad-page)] pt-13">
+    <span class="absolute top-4 right-[var(--pad-page)] font-bold text-[11px] tracking-[0.16em]">2026</span>
+    <h1 class="font-display font-black m-0 leading-[0.85] tracking-[-0.022em] text-[clamp(56px,11vw,140px)]">WORKS</h1>
+    <p class="text-[11px] font-semibold tracking-[0.32em] mt-5">OIL ON CANVAS&nbsp;·&nbsp;MYANMAR LANDSCAPES</p>
+  </section>
+
+  <section class="px-[var(--pad-page)] max-w-[1280px] mx-auto mt-16 md:mt-20 lg:mt-24 mb-16 md:mb-24 flex flex-col gap-20 md:gap-28 lg:gap-32">
+    {works.map((work) => <WorkRow work={work} />)}
+  </section>
+</Base>

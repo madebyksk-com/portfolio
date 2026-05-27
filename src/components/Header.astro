@@ -1,6 +1,6 @@
 ---
 import ArrowUpRight from './ArrowUpRight.astro';
-const { current } = Astro.props as { current?: 'home' | 'about' };
+const { current } = Astro.props as { current?: 'home' | 'works' | 'about' };
 ---
 <header class="topbar relative z-[60] flex justify-between items-center gap-6 bg-bg px-[var(--pad-page)] pt-8 pb-1
   md:px-12 lg:px-20 lg:pt-14 lg:pb-4 lg:max-w-[1280px] lg:mx-auto">
@@ -9,7 +9,7 @@ const { current } = Astro.props as { current?: 'home' | 'about' };
   </a>
 
   <nav class="hidden md:inline-flex gap-6" aria-label="Primary">
-    <a class="text-[12px] tracking-[0.1em] font-medium" href="/#works" aria-current={current === 'home' ? 'page' : undefined}>[ WORKS ]</a>
+    <a class="text-[12px] tracking-[0.1em] font-medium" href="/works" aria-current={current === 'works' ? 'page' : undefined}>[ WORKS ]</a>
     <a class="text-[12px] tracking-[0.1em] font-medium" href="/about" aria-current={current === 'about' ? 'page' : undefined}>[ ABOUT ]</a>
     <a class="text-[12px] tracking-[0.1em] font-medium" href="/#contact">[ CONTACT ]</a>
   </nav>

@@ -1,0 +1,37 @@
+---
+import { Image } from 'astro:assets';
+import { render } from 'astro:content';
+import type { CollectionEntry } from 'astro:content';
+import { getPlaceholder } from '../lib/placeholder';
+
+const { work } = Astro.props as { work: CollectionEntry<'works'> };
+const { title, year, medium, image, alt, dimensions, location } = work.data;
+const placeholder = await getPlaceholder(image);
+const hasBody = work.body && work.body.trim().length > 0;
+const { Content } = hasBody ? await render(work) : { Content: null };
+
+const meta = [year, medium, dimensions, location].filter(Boolean).join(' · ');
+---
+<article class="work-row grid grid-cols-1 gap-6 md:grid-cols-[5fr_7fr] md:gap-12 lg:gap-20 items-center">
+  <figure class="m-0 portrait-shadow relative">
+    <Image
+      src={image}
+      alt={alt}
+      loading="lazy"
+      class="relative z-[1] w-full h-auto object-cover bg-cover bg-center"
+      style={`background-image: url('${placeholder}')`}
+    />
+  </figure>
+
+  <div class="flex flex-col gap-4 md:gap-6">
+    <h2 class="font-display font-bold text-[clamp(28px,4vw,44px)] leading-[1.05] tracking-[-0.01em] m-0">
+      {title}
+    </h2>
+    <p class="text-[11px] font-semibold tracking-[0.16em] text-muted m-0">{meta.toUpperCase()}</p>
+    {Content && (
+      <div class="prose-body text-[15px] leading-[1.7] flex flex-col gap-4">
+        <Content />
+      </div>
+    )}
+  </div>
+</article>
