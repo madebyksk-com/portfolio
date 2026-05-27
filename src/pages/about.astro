@@ -1,0 +1,16 @@
+---
+import Base from '../layouts/Base.astro';
+import AboutIntro from '../components/AboutIntro.astro';
+import Statement from '../components/Statement.astro';
+import ContactList from '../components/ContactList.astro';
+---
+<Base title="About — Khin Sandar Kyaw" current="about">
+  <section class="about-hero relative px-[var(--pad-page)] pt-13">
+    <span class="year absolute top-4 right-[var(--pad-page)] font-bold text-[11px] tracking-[0.16em]">2026</span>
+    <h1 class="about-title font-display font-black m-0 leading-[0.85] tracking-[-0.022em] text-[clamp(56px,11vw,140px)]">ABOUT</h1>
+    <p class="about-tag text-[11px] font-semibold tracking-[0.32em] mt-5">LANDSCAPE PAINTER&nbsp;·&nbsp;YANGON, MYANMAR</p>
+  </section>
+  <AboutIntro />
+  <Statement />
+  <ContactList />
+</Base>

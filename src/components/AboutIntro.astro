@@ -1,0 +1,25 @@
+---
+import { Image } from 'astro:assets';
+import profile from '../assets/profile.jpg';
+---
+<section class="about-intro px-[var(--pad-page)] max-w-[1280px] mx-auto mt-8 grid grid-cols-1 gap-6 items-start
+    md:grid-cols-[5fr_7fr] md:gap-10 md:mt-12
+    lg:gap-16 lg:mt-16">
+  <figure class="about-studio portrait-shadow relative m-0 w-full">
+    <Image
+      src={profile}
+      alt="Khin Sandar Kyaw in her Yangon studio"
+      loading="lazy"
+      class="relative z-[1] w-full h-auto aspect-[4/5] object-cover filter grayscale contrast-[1.05] bg-muted"
+    />
+    <figcaption class="mt-3 text-[11px] font-semibold tracking-[0.16em] text-muted">
+      The studio, Yangon — 2025
+    </figcaption>
+  </figure>
+
+  <div class="about-bio flex flex-col gap-6 text-[16px] leading-[1.65] md:pt-2">
+    <p>Khin Sandar Kyaw is an oil painter based in Yangon, Myanmar. Her work captures the country's landscapes — from the still mornings on Inle Lake to the dust-warm afternoons across the Bagan plain — with a focus on light, atmosphere, and the rhythms of rural life.</p>
+    <p>Painting since 2010, she works primarily in oil on linen canvas. Each piece begins with field sketches and photographs gathered across her travels in Myanmar, then is built up slowly in the studio over weeks of layered glazes. Her preferred sizes range from intimate 12×18&nbsp;inch studies to larger 30×40&nbsp;inch panel works.</p>
+    <p>Her subjects span the country's regional contrasts — Inle's fishermen, Bagan's temples at sunrise, the highlands of Shan, and the everyday spectacle of Thingyan festival. The shared thread is light: the moment the sun touches a horizon, a wall, a face, a stretch of paddy field.</p>
+  </div>
+</section>
