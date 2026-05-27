@@ -15,7 +15,7 @@ const featured = (await getCollection('works'))
     </a>
   </div>
 
-  <div class="strip-track flex flex-col gap-8 lg:flex-row lg:gap-24 lg:overflow-x-auto lg:overflow-y-hidden lg:snap-x lg:snap-mandatory lg:pb-4 lg:[-webkit-overflow-scrolling:touch] lg:[&::-webkit-scrollbar]:h-0" role="list">
+  <div class="strip-track flex flex-col gap-8 lg:flex-row lg:gap-24 lg:overflow-x-auto lg:overflow-y-hidden lg:snap-x lg:snap-mandatory lg:pb-4 lg:[-webkit-overflow-scrolling:touch] lg:[&::-webkit-scrollbar]:h-0">
     {featured.map((work) => <Tile work={work} />)}
   </div>
 </section>

@@ -1,0 +1,33 @@
+---
+import Base from '../layouts/Base.astro';
+import ArrowUpRight from '../components/ArrowUpRight.astro';
+
+const description = 'Page not found — head back to the works or the home page.';
+---
+<Base title="Not found — Khin Sandar Kyaw" description={description}>
+  <section class="px-[var(--pad-page)] pt-13 pb-24 md:pb-32 lg:pb-40">
+    <span class="block text-right font-bold text-[11px] tracking-[0.16em]">404</span>
+
+    <h1 class="font-display font-black m-0 leading-[0.85] tracking-[-0.022em] text-[clamp(56px,11vw,140px)]">
+      NOT&nbsp;FOUND
+    </h1>
+    <p class="text-[11px] font-semibold tracking-[0.32em] mt-5">THIS PAGE DOESN'T EXIST</p>
+
+    <p class="max-w-[480px] mt-12 text-[15px] leading-[1.6]">
+      The page you were looking for either moved or never existed. The works
+      and the studio are still here — pick one below.
+    </p>
+
+    <div class="mt-10 flex flex-col gap-3 md:flex-row md:gap-8">
+      <a class="text-[12px] tracking-[0.1em] font-semibold underline" href="/">
+        BACK TO HOME<ArrowUpRight />
+      </a>
+      <a class="text-[12px] tracking-[0.1em] font-semibold underline" href="/works">
+        VIEW ALL WORKS<ArrowUpRight />
+      </a>
+      <a class="text-[12px] tracking-[0.1em] font-semibold underline" href="/about">
+        ABOUT THE ARTIST<ArrowUpRight />
+      </a>
+    </div>
+  </section>
+</Base>

@@ -1,10 +1,19 @@
 ---
+import { getCollection } from 'astro:content';
 import { Image } from 'astro:assets';
 import profile from '../assets/profile.jpg';
 import ArrowUpRight from './ArrowUpRight.astro';
 import { getPlaceholder } from '../lib/placeholder';
 
 const profilePlaceholder = await getPlaceholder(profile);
+
+// Most recent painting — highest year, lowest order on ties.
+const works = await getCollection('works');
+const recent = works.length
+  ? [...works].sort((a, b) =>
+      b.data.year - a.data.year || a.data.order - b.data.order,
+    )[0]
+  : null;
 ---
 <section class="hero flex flex-col gap-5 px-[var(--pad-page)] md:gap-8 lg:gap-4 lg:relative lg:py-0">
   <span class="year block text-right font-bold text-[11px] tracking-[0.16em] lg:hidden">2026</span>
@@ -52,9 +61,11 @@ const profilePlaceholder = await getPlaceholder(profile);
       <span class="font-semibold text-[11px] tracking-[0.16em]">AVAILABLE FOR COMMISSIONS<ArrowUpRight /></span>
       <a class="text-[14px] font-medium underline" href="mailto:hello@khinsandarkyaw.com">hello@khinsandarkyaw.com</a>
     </div>
-    <div class="flex flex-col gap-2 text-right">
-      <span class="font-semibold text-[11px] tracking-[0.16em]">RECENT WORK<ArrowUpRight /></span>
-      <a class="font-display font-bold text-[18px] tracking-[0.03em]" href="#works">FISHERMAN AT INLE</a>
-    </div>
+    {recent && (
+      <div class="flex flex-col gap-2 text-right">
+        <span class="font-semibold text-[11px] tracking-[0.16em]">RECENT WORK<ArrowUpRight /></span>
+        <a class="font-display font-bold text-[18px] tracking-[0.03em]" href="/works">{recent.data.title.toUpperCase()}</a>
+      </div>
+    )}
   </div>
 </section>

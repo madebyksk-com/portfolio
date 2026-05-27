@@ -5,13 +5,10 @@
   font-display: swap;
   src: url("/fonts/antonio-700.woff2") format("woff2");
 }
-@font-face {
-  font-family: "Antonio";
-  font-style: normal;
-  font-weight: 900;
-  font-display: swap;
-  src: url("/fonts/antonio-900.woff2") format("woff2") tech(variations);
-}
+/* font-weight: 900 (Tailwind `font-black`) is requested on the page
+   headlines, but Antonio doesn't ship a static 900 cut and shipping
+   the variable file would cost ~26 KB. The browser cleanly clamps
+   to the heaviest available face (700), producing identical pixels. */
 @font-face {
   font-family: "Inter";
   font-style: normal;

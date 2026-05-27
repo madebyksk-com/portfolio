@@ -10,7 +10,12 @@ function initMobileMenu() {
   function setMenu(open: boolean) {
     body.classList.toggle('menu-open', open);
     menuBtn!.setAttribute('aria-expanded', String(open));
-    mobileNav!.setAttribute('aria-hidden', String(!open));
+    // The `inert` attribute hides the nav from the a11y tree AND removes
+    // its descendants from the focus order while closed — fixes the
+    // Lighthouse "focusable descendents in aria-hidden" warning that
+    // setting only aria-hidden would leave behind.
+    if (open) mobileNav!.removeAttribute('inert');
+    else mobileNav!.setAttribute('inert', '');
     menuBtn!.textContent = open ? 'CLOSE' : 'MENU';
   }
 
