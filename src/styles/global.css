@@ -124,7 +124,11 @@ img { max-width: 100%; display: block; }
    that interactions.ts writes on mousemove. Kept as plain CSS
    because the calc() in transform mixes runtime vars.
    ------------------------------------------------------------ */
-.portrait-shadow { position: relative; }
+/* .portrait-shadow does not set its own position — its consumers carry
+   the `relative` utility on mobile/md and `lg:absolute` on desktop, both
+   of which establish a containing block for this ::before. Setting
+   position here would override `lg:absolute` because this rule sits
+   after Tailwind's @import in the cascade. */
 .portrait-shadow::before {
   content: '';
   position: absolute;

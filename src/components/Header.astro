@@ -3,7 +3,7 @@ import ArrowUpRight from './ArrowUpRight.astro';
 const { current } = Astro.props as { current?: 'home' | 'about' };
 ---
 <header class="topbar relative z-[60] flex justify-between items-center gap-6 bg-bg px-[var(--pad-page)] pt-8 pb-1
-  md:px-12 lg:px-20 lg:pt-14 lg:pb-4">
+  md:px-12 lg:px-20 lg:pt-14 lg:pb-4 lg:max-w-[1280px] lg:mx-auto">
   <a class="wordmark font-bold text-[14px] tracking-[0.1em] leading-none" href="/" aria-label="Khin Sandar Kyaw — Home">
     <span class="wordmark-text">KHIN</span>
   </a>
