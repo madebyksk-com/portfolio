@@ -2,6 +2,9 @@
 import { Image } from 'astro:assets';
 import profile from '../assets/profile.jpg';
 import ArrowUpRight from './ArrowUpRight.astro';
+import { getPlaceholder } from '../lib/placeholder';
+
+const profilePlaceholder = await getPlaceholder(profile);
 ---
 <section class="hero flex flex-col gap-5 px-[var(--pad-page)] md:gap-8 lg:gap-4 lg:relative lg:py-0">
   <span class="year block text-right font-bold text-[11px] tracking-[0.16em] lg:hidden">2026</span>
@@ -26,7 +29,8 @@ import ArrowUpRight from './ArrowUpRight.astro';
         src={profile}
         alt="Portrait of the artist, Khin Sandar Kyaw"
         loading="eager"
-        class="w-full h-full object-cover object-center filter grayscale contrast-[1.08] brightness-[1.02] bg-muted"
+        class="w-full h-full object-cover object-center bg-cover bg-center filter grayscale contrast-[1.08] brightness-[1.02]"
+        style={`background-image: url('${profilePlaceholder}')`}
       />
     </figure>
 

@@ -8,15 +8,15 @@ const { title, year, medium, image, alt } = work.data;
 const placeholder = await getPlaceholder(image);
 ---
 <article
-  class="tile relative bg-muted overflow-hidden aspect-[3/2] lg:aspect-auto lg:h-[70vh] lg:max-h-[560px] lg:flex-[0_0_70vw] lg:max-w-[840px] lg:snap-start bg-cover bg-center"
-  style={`background-image: url('${placeholder}')`}
+  class="tile relative bg-muted overflow-hidden aspect-[3/2] lg:aspect-auto lg:h-[70vh] lg:max-h-[560px] lg:flex-[0_0_70vw] lg:max-w-[840px] lg:snap-start"
   role="listitem"
 >
   <Image
     src={image}
     alt={alt}
     loading="lazy"
-    class="w-full h-full object-cover transition-transform duration-500 ease-out hover:scale-[1.04]"
+    class="w-full h-full object-cover bg-cover bg-center transition-transform duration-500 ease-out hover:scale-[1.04]"
+    style={`background-image: url('${placeholder}')`}
   />
   <div class="tile-caption absolute left-4 bottom-4 px-3.5 py-2.5 bg-[rgba(26,20,16,0.28)] backdrop-blur-[14px] backdrop-saturate-150 text-bg pointer-events-none flex flex-col gap-1 md:left-6 md:bottom-6">
     <h3 class="font-display font-bold text-[18px] tracking-[0.03em] md:text-[22px]">{title.toUpperCase()}</h3>

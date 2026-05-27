@@ -1,6 +1,9 @@
 ---
 import { Image } from 'astro:assets';
 import profile from '../assets/profile.jpg';
+import { getPlaceholder } from '../lib/placeholder';
+
+const profilePlaceholder = await getPlaceholder(profile);
 ---
 <section class="about-intro px-[var(--pad-page)] max-w-[1280px] mx-auto mt-8 grid grid-cols-1 gap-6 items-start
     md:grid-cols-[5fr_7fr] md:gap-10 md:mt-12
@@ -10,7 +13,8 @@ import profile from '../assets/profile.jpg';
       src={profile}
       alt="Khin Sandar Kyaw in her Yangon studio"
       loading="lazy"
-      class="relative z-[1] w-full h-auto aspect-[4/5] object-cover filter grayscale contrast-[1.05] bg-muted"
+      class="relative z-[1] w-full h-auto aspect-[4/5] object-cover bg-cover bg-center filter grayscale contrast-[1.05]"
+      style={`background-image: url('${profilePlaceholder}')`}
     />
     <figcaption class="mt-3 text-[11px] font-semibold tracking-[0.16em] text-muted">
       The studio, Yangon — 2025
