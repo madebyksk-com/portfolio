@@ -2,8 +2,39 @@
 import Base from '../layouts/Base.astro';
 import Hero from '../components/Hero.astro';
 import WorksStrip from '../components/WorksStrip.astro';
+
+const description =
+  "Oil paintings by Khin Sandar Kyaw, a landscape painter based in Yangon, Myanmar. Light, atmosphere, and rural life from Inle Lake, Bagan, the Shan highlands, and beyond.";
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Person',
+  '@id': 'https://madebyksk.com/#person',
+  name: 'Khin Sandar Kyaw',
+  jobTitle: 'Landscape painter',
+  description,
+  url: 'https://madebyksk.com',
+  image: 'https://madebyksk.com/og.jpg',
+  worksFor: { '@type': 'Organization', name: 'Independent studio' },
+  address: {
+    '@type': 'PostalAddress',
+    addressLocality: 'Yangon',
+    addressCountry: 'MM',
+  },
+  sameAs: [
+    'https://www.instagram.com/khinsandar798',
+    'https://www.facebook.com/khin.sandarphone.kyaw',
+  ],
+  email: 'hello@khinsandarkyaw.com',
+};
 ---
-<Base title="Khin Sandar Kyaw — Landscape Painter, Myanmar" current="home">
+<Base
+  title="Khin Sandar Kyaw — Landscape Painter, Myanmar"
+  description={description}
+  current="home"
+  ogType="profile"
+  jsonLd={jsonLd}
+>
   <Hero />
   <WorksStrip />
 </Base>
