@@ -1,0 +1,32 @@
+---
+import ArrowUpRight from './ArrowUpRight.astro';
+const { current } = Astro.props as { current?: 'home' | 'about' };
+---
+<header class="topbar relative z-[60] flex justify-between items-center gap-6 bg-bg px-[var(--pad-page)] pt-8 pb-1
+  md:px-12 lg:px-20 lg:pt-14 lg:pb-4">
+  <a class="wordmark font-bold text-[14px] tracking-[0.1em] leading-none" href="/" aria-label="Khin Sandar Kyaw — Home">
+    <span class="wordmark-text">KHIN</span>
+  </a>
+
+  <nav class="hidden md:inline-flex gap-6" aria-label="Primary">
+    <a class="text-[12px] tracking-[0.1em] font-medium" href="/#works" aria-current={current === 'home' ? 'page' : undefined}>[ WORKS ]</a>
+    <a class="text-[12px] tracking-[0.1em] font-medium" href="/about" aria-current={current === 'about' ? 'page' : undefined}>[ ABOUT ]</a>
+    <a class="text-[12px] tracking-[0.1em] font-medium" href="/#contact">[ CONTACT ]</a>
+  </nav>
+
+  <a class="hidden md:inline-block text-[12px] tracking-[0.1em] font-semibold underline" href="mailto:hello@khinsandarkyaw.com">
+    INQUIRE<ArrowUpRight />
+  </a>
+
+  <button class="menu-btn md:hidden font-semibold text-[11px] tracking-[0.12em] underline" aria-expanded="false" aria-controls="mobile-nav">
+    MENU
+  </button>
+</header>
+
+<style is:global>
+  :root { --pad-page: 24px; }
+  @media (min-width: 768px) { :root { --pad-page: 48px; } }
+  @media (min-width: 1024px) { :root { --pad-page: 80px; } }
+  /* Underline indicator on the active page in nav */
+  nav a[aria-current="page"] { text-decoration: underline; text-underline-offset: 6px; }
+</style>

@@ -88,3 +88,33 @@ img { max-width: 100%; display: block; }
     transition-duration: 0.01ms !important;
   }
 }
+
+/* ------------------------------------------------------------
+   Wordmark paint-splash decoration.
+   Kept as plain CSS because pseudo-elements with background-image
+   + hover-driven transform do not map cleanly to utilities.
+   ------------------------------------------------------------ */
+.wordmark { position: relative; display: inline-flex; align-items: center; }
+.wordmark::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 120px;
+  height: 120px;
+  transform: translate(-50%, -50%);
+  background: url('/svg/paint-mark-1.svg') no-repeat center / contain;
+  z-index: 1;
+  pointer-events: none;
+  transition: transform 0.5s cubic-bezier(0.25, 1, 0.5, 1);
+}
+.topbar:hover .wordmark::before {
+  transform: translate(-50%, -50%) rotate(20deg);
+}
+.wordmark-text {
+  position: relative;
+  z-index: 2;
+  color: var(--color-bg);
+  mix-blend-mode: difference;
+  user-select: none;
+}
